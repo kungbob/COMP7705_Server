@@ -137,8 +137,12 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# Ignore All Result Image
+# Ignore All Import Image
 /app/ml/dataset/cat2anime/**/*.png
+/app/ml/dataset/cat2anime/**/*.jpg
+
+# Ignore All Export Image
+/app/ml/results/cat2anime/**/*.png
 
 # Ignore Model
 /app/ml/results/cat2anime/**/*.pt

@@ -30,7 +30,7 @@ def upload():
     fileExist = checkfile(newlocation)
     if fileExist:
         convertImage(newlocation, newfilename)
-        return newfilename + '.' + filename.split('.')[-1]
+        return newfilename + '.png'
     else:
         return abort(Response('File Not Exist'))
 
