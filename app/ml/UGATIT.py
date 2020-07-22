@@ -465,4 +465,35 @@ class UGATIT(object) :
             cv2.imwrite(os.path.join(self.result_dir, self.dataset, 'test', '%s.png' % newfilename), A2B * 255.0)
 
         return 
-            
+
+    def generateCat(self, newlocation, newfilename):
+        model_list = glob(os.path.join(self.result_dir, self.dataset, 'model', '*.pt'))
+        if not len(model_list) == 0:
+            model_list.sort()
+            iter = int(model_list[-1].split('_')[-1].split('.')[0])
+            self.load(os.path.join(self.result_dir, self.dataset, 'model'), iter)
+            print(" [*] Load SUCCESS")
+        else:
+            print(" [*] Load FAILURE")
+            return
+
+        self.genA2B.eval(), self.genB2A.eval()
+
+        convertFolder = ImageFolder(os.path.join('app/ml/dataset', self.dataset, newfilename), self.test_transform)
+
+        newLoader = DataLoader(convertFolder, batch_size=1, shuffle=False)
+
+        for n, (real_B, _) in enumerate(self.testB_loader):
+            real_B = real_B.to(self.device)
+
+            fake_B2A, _, fake_B2A_heatmap = self.genB2A(real_B)
+
+            fake_B2A2B, _, fake_B2A2B_heatmap = self.genA2B(fake_B2A)
+
+            fake_B2B, _, fake_B2B_heatmap = self.genA2B(real_B)
+
+            B2A = RGB2BGR(tensor2numpy(denorm(fake_B2A[0])))
+
+            cv2.imwrite(os.path.join(self.result_dir, self.dataset, 'test', '%s.png' % newfilename), B2A * 255.0)
+
+        return 

@@ -33,6 +33,16 @@ pip install numpy scipy matplotlib ipython jupyter pandas sympy nose
 pip install opencv-python
 ```
 
+7. Install flask
+```
+pip install flask
+```
+
+8. Install flask cors
+```
+pip install flask-cors
+```
+
 7. Run Flask
 ```
 flask run

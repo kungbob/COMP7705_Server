@@ -79,7 +79,7 @@ def main():
         gan.test()
         print(" [*] Test finished!")
 
-"""custom"""
+# ConvertToAnime
 def convertToAnime(newlocation, newfilename):
     args = { 'adv_weight': 1, 'batch_size':1, 'benchmark_flag':False, 'cam_weight':1000, 'ch':64, 'cycle_weight':10, 'dataset':'cat2anime', 'decay_flag':True, 'device':'cpu', 'identity_weight':10, 'img_ch':3, 'img_size':128, 'iteration':1000000, 'light':False, 'lr':0.0001, 'n_dis':6, 'n_res':4, 'phase':'test', 'print_freq':1000, 'result_dir':'app/ml/results', 'resume':False, 'save_freq':100000, 'weight_decay':0.0001}
     args = argparse.Namespace(**args)
@@ -87,6 +87,15 @@ def convertToAnime(newlocation, newfilename):
     gan.build_model()
     gan.generateAnime(newlocation, newfilename)
     print(" [*] Generate Anime finished!")
+
+# ConvertToCat
+def convertToCat(newlocation, newfilename):
+    args = { 'adv_weight': 1, 'batch_size':1, 'benchmark_flag':False, 'cam_weight':1000, 'ch':64, 'cycle_weight':10, 'dataset':'cat2anime', 'decay_flag':True, 'device':'cpu', 'identity_weight':10, 'img_ch':3, 'img_size':128, 'iteration':1000000, 'light':False, 'lr':0.0001, 'n_dis':6, 'n_res':4, 'phase':'test', 'print_freq':1000, 'result_dir':'app/ml/results', 'resume':False, 'save_freq':100000, 'weight_decay':0.0001}
+    args = argparse.Namespace(**args)
+    gan = UGATIT(args)
+    gan.build_model()
+    gan.generateCat(newlocation, newfilename)
+    print(" [*] Generate Cat finished!")
 
 if __name__ == '__main__':
     main()
