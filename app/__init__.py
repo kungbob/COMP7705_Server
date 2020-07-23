@@ -45,6 +45,8 @@ def checkfile(location):
     return os.path.exists(location)
 
 def convertImage(newlocation, newfilename, mode):
+    if type(mode) is str:
+        mode = int(mode)
     if mode == 1:
         convertToAnime(newlocation, newfilename)
     elif mode == 2:
