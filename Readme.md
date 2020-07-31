@@ -3,6 +3,7 @@
 The server is based on Flask.
 
 ## Setup
+This branch is for non-sql connection. Please be reminded that some functions with database is removed.
 
 ### For Windows
 
