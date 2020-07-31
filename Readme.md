@@ -4,6 +4,8 @@ The server is based on Flask.
 
 ## Setup
 
+If there is no database setup, please change the branch to non-sql branch. DB connection and functions are removed.
+
 ### For Windows
 
 1. Install Python (Ensure version is above 3.6)
