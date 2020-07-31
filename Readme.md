@@ -4,7 +4,7 @@ The server is based on Flask.
 
 ## Setup
 
-If there is no database setup, please change the branch to non-sql branch. DB connection and functions are removed.
+If there is no database setup, please change the branch to non-sql branch. DB connection and functions are removed in the non-sql branch.
 
 ### For Windows
 
