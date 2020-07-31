@@ -2,17 +2,37 @@ import os
 import io
 from flask import Flask, request, send_from_directory, send_file
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import uuid
 
+from . import models
 from app.ml.main import convertToAnime, convertToCat
 
+
+# Database Configuration
+database_uri = 'postgresql://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
+    dbuser=os.environ['DB_USER'],
+    dbpass=os.environ['DB_PASSWORD'],
+    dbhost=os.environ['DB_HOST'],
+    dbname=os.environ['DB_NAME'],
+)
+
+
 app = Flask(__name__, static_folder="", static_url_path="")
+
+app.config["SQLALCHEMY_DATABASE_URI"] = database_uri
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 PreConvertFolder = './app/ml/dataset/cat2anime/'
 PostConvertFolder = './app/ml/results/cat2anime/test/'
 
 CORS(app)
+
+# SQLAlchemy and Flask-Migrate configuration
+models.db.init_app(app)
+
+db = models.db
 
 @app.route('/uploadImage', methods=['POST'])
 def upload():
@@ -37,6 +57,7 @@ def upload():
     fileExist = checkfile(newlocation)
     if fileExist:
         convertImage(newlocation, newfilename, mode)
+        createRecord(newfilename, newfilename, mode)
         return newfilename + '.png'
     else:
         return abort(Response('File Not Exist'))
@@ -60,4 +81,9 @@ def download(filename):
             io.BytesIO(bites.read()),
             mimetype="image/png"
         )
-    
+
+def createRecord(oldfilename, newfilename, mode):
+    print(oldfilename, newfilename, mode)
+    r = models.Record(uploadname=oldfilename, downloadname=newfilename, converttype=mode)
+    db.session.add(r)
+    db.session.commit()

@@ -43,6 +43,16 @@ pip install flask
 pip install flask-cors
 ```
 
+9. Install Flask SQLALCHEMY
+```
+pip install Flask-SQLAlchemy
+```
+
+10. Install Python dotenv
+```
+pip install python-dotenv
+```
+
 7. Run Flask
 ```
 flask run
